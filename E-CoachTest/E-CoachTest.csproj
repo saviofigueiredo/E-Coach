@@ -58,7 +58,6 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="ActivityTest.cs" />
     <Compile Include="AthleteTest.cs" />
     <Compile Include="CoachTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
