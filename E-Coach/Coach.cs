@@ -1,11 +1,13 @@
-﻿
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
 namespace E_Coach
 {
     using System;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.Collections.Generic;
-    
+
+    [Table("Coach")]
     public class Coach
     {
         [Key, ReadOnly(true)]

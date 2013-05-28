@@ -1,7 +1,6 @@
 ﻿namespace E_Coach
 {
     using System.Data.Entity;
-    using System.Linq;
     
     public class ContextHelper : DbContext
     {
