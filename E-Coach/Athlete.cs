@@ -1,16 +1,14 @@
 ﻿namespace E_Coach
 {
     using System;
-    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Collections.Generic;
 
-    [Table("Athlete")]
-    public class Athlete
+    [Table(TableName)]
+    public class Athlete : IPersistence
     {
-        [Key, ReadOnly(true)]
-        public int Id { get; set; }
+        internal const string TableName = "Athlete";
 
         [EmailAddress, Required]
         public string Email { get; set; }
@@ -58,6 +56,11 @@
             }
 
             return (Email == p.Email) && (Name == p.Name);
+        }
+
+        internal override string GetTableName()
+        {
+            return TableName;
         }
     }
 }

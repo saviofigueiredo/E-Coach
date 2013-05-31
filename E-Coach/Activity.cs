@@ -4,11 +4,10 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    [Table("Activity")]
-    public class Activity
+    [Table(TableName)]
+    public class Activity : IPersistence
     {
-        [Key]
-        public int Id { get; set; }
+        internal const string TableName = "Activity";
 
         [Required]
         public DateTime Date { get; set; }
@@ -35,5 +34,9 @@
             return (Description == p.Description) && (Date.ToShortDateString() == p.Date.ToShortDateString());
         }
 
+        internal override string GetTableName()
+        {
+            return TableName;
+        }
     }
 }

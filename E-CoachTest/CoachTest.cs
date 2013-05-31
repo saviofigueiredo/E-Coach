@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System.Linq;
+using FluentAssertions;
 
 namespace E_CoachTest
 {
@@ -13,16 +14,10 @@ namespace E_CoachTest
         {
             var newCoach = new Coach {Email = "coach@email.com", Name = "Joel Santana"};
 
-            using (var dbContext = new ContextHelper())
-            {
-                dbContext.Coaches.Add(newCoach);
-                dbContext.SaveChanges();
-            }
+            newCoach.Insert();
         
-            using (var dbContext = new ContextHelper())
-            {
-                dbContext.Coaches.Find(newCoach.Id).ShouldBeEquivalentTo(newCoach);
-            }
+            var persistedCoach = PersistenceManager.Get().Find(newCoach);
+            persistedCoach.ShouldBeEquivalentTo(newCoach);
         }
 
         [TestMethod]
@@ -32,29 +27,19 @@ namespace E_CoachTest
             var newAthlete = new Athlete { Name = "Zico", Email = "zico@flamengo.com.br" };
             newCoach.AddAthlete(newAthlete);
 
-            using (var dbContext = new ContextHelper())
-            {
-                dbContext.Coaches.Add(newCoach);
-                dbContext.SaveChanges();
-            }
+            newCoach.Insert();
 
-            using (var dbContext = new ContextHelper())
-            {
-                dbContext.Coaches.Find(newCoach.Id).GetAthletes().Should().Contain(newAthlete);
-            }
+            var persistedCoach = PersistenceManager.Get().Find(newCoach);
+            persistedCoach.Athletes.Should().Contain(newAthlete);
         }
 
         [TestInitialize]
         public void TestSetup()
         {
-            using (var dbContext = new ContextHelper())
+            var coaches = PersistenceManager.Get().Coaches().ToList();
+            foreach (var coach in coaches)
             {
-                foreach (var coach in dbContext.Coaches)
-                {
-                    dbContext.Coaches.Remove(coach);
-                }
-
-                dbContext.SaveChanges();
+                coach.Delete();
             }
         }
     }

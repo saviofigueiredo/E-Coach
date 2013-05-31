@@ -48,6 +48,8 @@
     <Compile Include="Athlete.cs" />
     <Compile Include="Coach.cs" />
     <Compile Include="ContextHelper.cs" />
+    <Compile Include="IPersistence.cs" />
+    <Compile Include="PersistenceManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

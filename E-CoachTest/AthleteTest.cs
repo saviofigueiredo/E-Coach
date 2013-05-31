@@ -18,17 +18,9 @@ namespace E_CoachTest
             newAthlete.AddActivity(newActivity);
             newCoach.AddAthlete(newAthlete);
 
-            using (var dbContext = new ContextHelper())
-            {
-                dbContext.Coaches.Add(newCoach);
-                dbContext.SaveChanges();
-            }
+            newCoach.Insert();
 
-            using (var dbContext = new ContextHelper())
-            {
-                var athlete = dbContext.Athletes.Find(newAthlete.Id);
-                athlete.GetActivities().FirstOrDefault().ShouldBeEquivalentTo(newActivity);
-            }
+            PersistenceManager.Get().Find(newAthlete).GetActivities().FirstOrDefault().ShouldBeEquivalentTo(newActivity);
         }
 
         [TestInitialize]

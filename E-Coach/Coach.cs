@@ -1,17 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace E_Coach
+﻿namespace E_Coach
 {
     using System;
-    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
     using System.Collections.Generic;
 
-    [Table("Coach")]
-    public class Coach
+    [Table(TableName)]
+    public class Coach : IPersistence
     {
-        [Key, ReadOnly(true)]
-        public int Id { get; set; }
+        internal const string TableName = "Coach";
 
         [EmailAddress, Required]
         public string Email { get; set; }
@@ -56,6 +53,11 @@ namespace E_Coach
             }
 
             return (Email == p.Email) && (Name == p.Name);
+        }
+        
+        internal override string GetTableName()
+        {
+            return TableName;
         }
     }
 }
