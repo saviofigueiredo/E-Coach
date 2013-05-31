@@ -1,9 +1,8 @@
-﻿using System.Linq;
-using FluentAssertions;
-
-namespace E_CoachTest
+﻿namespace E_CoachTest
 {
+    using System.Linq;
     using E_Coach;
+    using FluentAssertions;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]

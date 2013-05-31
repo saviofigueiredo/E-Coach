@@ -1,7 +1,6 @@
-﻿using System.Linq;
-
-namespace E_CoachTest
+﻿namespace E_CoachTest
 {
+    using System.Linq;
     using E_Coach;
     using FluentAssertions;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -26,16 +25,11 @@ namespace E_CoachTest
         [TestInitialize]
         public void TestSetup()
         {
-            using (var dbContext = new ContextHelper())
+            var coaches = PersistenceManager.Get().Coaches().ToList();
+            foreach (var coach in coaches)
             {
-                foreach (var coach in dbContext.Coaches)
-                {
-                    dbContext.Coaches.Remove(coach);
-                }
-
-                dbContext.SaveChanges();
+                coach.Delete();
             }
         }
-
     }
 }

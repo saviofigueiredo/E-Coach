@@ -1,7 +1,6 @@
 ﻿namespace E_Coach
 {
     using System.Collections.Generic;
-    using System.Data.Entity;
     
     public class PersistenceManager
     {
@@ -32,42 +31,19 @@
             return context.Coaches;
         }
 
-        public T Find<T>(T element) where T : IPersistence 
+        public T Find<T>(T element) where T : IPersistence
         {
-             return GetDbSet(element).Find(element.Id) as T;
+            return context.Find(element);
         }
 
         public void Insert(IPersistence element)
         {
-            GetDbSet(element).Add(element);
-            context.SaveChanges();
+            context.Insert(element);
         }
 
         public void Delete(IPersistence element)
         {
-            var dbSet = GetDbSet(element);
-            dbSet.Remove(element);
-            context.SaveChanges();
-        }
-
-        private DbSet GetDbSet(IPersistence element)
-        {
-            if (element is Activity)
-            {
-                return context.Activities;
-            }
-            
-            if (element is Athlete)
-            {
-                return context.Athletes;
-            }
-        
-            if (element is Coach)
-            {
-                return context.Coaches;
-            }
-
-            return null;
+            context.Delete(element);
         }
 
         private void DisposeContext()
